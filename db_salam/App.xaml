@@ -1,0 +1,71 @@
+﻿<Application x:Class="db_salam.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:db_salam"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="Login.xaml">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Brown" />
+
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.DataGrid.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ComboBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Indigo.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+        <!-- Стиль для Button -->
+        <Style TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="Background" Value="DeepPink"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="BorderBrush" Value="Transparent"/>
+
+        <!-- Настройка состояний кнопки -->
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="DeepPink"/>
+                </Trigger>
+
+                <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="DeepPink"/>                
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Foreground" Value="DeepPink"/>                
+                </Trigger>
+            </Style.Triggers>
+
+            </Style>
+        
+        <!-- Стиль для TextBox -->
+            <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Bisque"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Bisque"/>
+        </Style>
+
+        <!-- Стиль для DataGrid -->
+        <Style TargetType="DataGrid" BasedOn="{StaticResource MaterialDesignDataGrid}">
+            <Setter Property="Background" Value="LightGray"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -1,0 +1,659 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище salamModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Account" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Surname_Client" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name_Client" Type="varchar" MaxLength="30" />
+          <Property Name="Lastname_Client" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ImageTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImageData" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Order_Products">
+          <Key>
+            <PropertyRef Name="Order_Product_ID" />
+          </Key>
+          <Property Name="Order_Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Order_ID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Client_ID" Type="int" Nullable="false" />
+          <Property Name="Staff_ID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="100" />
+          <Property Name="Payment" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="40" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Post_ID" />
+          </Key>
+          <Property Name="Post_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PostName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Storage_ID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="100" />
+          <Property Name="Title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Providers">
+          <Key>
+            <PropertyRef Name="Provider_ID" />
+          </Key>
+          <Property Name="Provider_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Product_ID" Type="int" Nullable="false" />
+          <Property Name="Storage_ID" Type="int" Nullable="false" />
+          <Property Name="DateOfProvide" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Staffs">
+          <Key>
+            <PropertyRef Name="Staff_ID" />
+          </Key>
+          <Property Name="Staff_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Post_ID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Surname_Staff" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name_Staff" Type="varchar" MaxLength="30" />
+          <Property Name="Lastname_Staff" Type="varchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Storage_ID" />
+          </Key>
+          <Property Name="Storage_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Storage_Name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Users_Id" />
+          </Key>
+          <Property Name="Users_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Salt" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Order_Products_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Order_ID" />
+            </Principal>
+            <Dependent Role="Order_Products">
+              <PropertyRef Name="Order_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Products_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Order_Products">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Staffs">
+          <End Role="Staffs" Type="Self.Staffs" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staffs">
+              <PropertyRef Name="Staff_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Staff_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Storage_ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Storage_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Providers_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Providers" Type="Self.Providers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Providers_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Providers" Type="Self.Providers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Storage_ID" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="Storage_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staffs_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Staffs" Type="Self.Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_ID" />
+            </Principal>
+            <Dependent Role="Staffs">
+              <PropertyRef Name="Post_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище salamModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImageTable" EntityType="Self.ImageTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Products" EntityType="Self.Order_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Providers" EntityType="Self.Providers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staffs" EntityType="Self.Staffs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Order_Products_Orders" Association="Self.FK_Order_Products_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Products" EntitySet="Order_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Products_Products" Association="Self.FK_Order_Products_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Order_Products" EntitySet="Order_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Staffs" Association="Self.FK_Orders_Staffs">
+            <End Role="Staffs" EntitySet="Staffs" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Storage" Association="Self.FK_Products_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Providers_Products" Association="Self.FK_Providers_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Providers_Storage" Association="Self.FK_Providers_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staffs_Post" Association="Self.FK_Staffs_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Staffs" EntitySet="Staffs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="salamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Client_ID" />
+          </Key>
+          <Property Name="Client_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Account" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname_Client" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name_Client" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname_Client" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Clients" FromRole="Clients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Order_Products">
+          <Key>
+            <PropertyRef Name="Order_Product_ID" />
+          </Key>
+          <Property Name="Order_Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Order_ID" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Products_Orders" FromRole="Order_Products" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Order_Products_Products" FromRole="Order_Products" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Order_ID" />
+          </Key>
+          <Property Name="Order_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Client_ID" Type="Int32" Nullable="false" />
+          <Property Name="Staff_ID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Payment" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Orders_Clients" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="Order_Products" Relationship="Self.FK_Order_Products_Orders" FromRole="Orders" ToRole="Order_Products" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Orders_Staffs" FromRole="Orders" ToRole="Staffs" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Post_ID" />
+          </Key>
+          <Property Name="Post_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PostName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staffs_Post" FromRole="Post" ToRole="Staffs" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Product_ID" />
+          </Key>
+          <Property Name="Product_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Storage_ID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Order_Products" Relationship="Self.FK_Order_Products_Products" FromRole="Products" ToRole="Order_Products" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Products_Storage" FromRole="Products" ToRole="Storage" />
+          <NavigationProperty Name="Providers" Relationship="Self.FK_Providers_Products" FromRole="Products" ToRole="Providers" />
+        </EntityType>
+        <EntityType Name="Providers">
+          <Key>
+            <PropertyRef Name="Provider_ID" />
+          </Key>
+          <Property Name="Provider_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Product_ID" Type="Int32" Nullable="false" />
+          <Property Name="Storage_ID" Type="Int32" Nullable="false" />
+          <Property Name="DateOfProvide" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Providers_Products" FromRole="Providers" ToRole="Products" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Providers_Storage" FromRole="Providers" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="Staffs">
+          <Key>
+            <PropertyRef Name="Staff_ID" />
+          </Key>
+          <Property Name="Staff_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Post_ID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Surname_Staff" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name_Staff" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Lastname_Staff" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Staffs" FromRole="Staffs" ToRole="Orders" />
+          <NavigationProperty Name="Post" Relationship="Self.FK_Staffs_Post" FromRole="Staffs" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Storage_ID" />
+          </Key>
+          <Property Name="Storage_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Storage_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Storage" FromRole="Storage" ToRole="Products" />
+          <NavigationProperty Name="Providers" Relationship="Self.FK_Providers_Storage" FromRole="Storage" ToRole="Providers" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Users_Id" />
+          </Key>
+          <Property Name="Users_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Client_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Client_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Products_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Order_ID" />
+            </Principal>
+            <Dependent Role="Order_Products">
+              <PropertyRef Name="Order_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Products_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Order_Products" Type="Self.Order_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Order_Products">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Staffs">
+          <End Role="Staffs" Type="Self.Staffs" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staffs">
+              <PropertyRef Name="Staff_ID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Staff_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staffs_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Staffs" Type="Self.Staffs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Post_ID" />
+            </Principal>
+            <Dependent Role="Staffs">
+              <PropertyRef Name="Post_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Storage_ID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Storage_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Providers_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Providers" Type="Self.Providers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Product_ID" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="Product_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Providers_Storage">
+          <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+          <End Role="Providers" Type="Self.Providers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Storage">
+              <PropertyRef Name="Storage_ID" />
+            </Principal>
+            <Dependent Role="Providers">
+              <PropertyRef Name="Storage_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="salamEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Order_Products" EntityType="Self.Order_Products" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Post" EntityType="Self.Post" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Providers" EntityType="Self.Providers" />
+          <EntitySet Name="Staffs" EntityType="Self.Staffs" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Products_Orders" Association="Self.FK_Order_Products_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_Products" EntitySet="Order_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Products_Products" Association="Self.FK_Order_Products_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Order_Products" EntitySet="Order_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Staffs" Association="Self.FK_Orders_Staffs">
+            <End Role="Staffs" EntitySet="Staffs" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staffs_Post" Association="Self.FK_Staffs_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Staffs" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Storage" Association="Self.FK_Products_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Providers_Products" Association="Self.FK_Providers_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Providers_Storage" Association="Self.FK_Providers_Storage">
+            <End Role="Storage" EntitySet="Storage" />
+            <End Role="Providers" EntitySet="Providers" />
+          </AssociationSet>
+          <EntitySet Name="ImageTable" EntityType="salamModel.ImageTable" />
+        </EntityContainer>
+        <EntityType Name="ImageTable">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageData" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище salamModelContainer" CdmEntityContainer="salamEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="salamModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="Surname_Client" ColumnName="Surname_Client" />
+                <ScalarProperty Name="Name_Client" ColumnName="Name_Client" />
+                <ScalarProperty Name="Lastname_Client" ColumnName="Lastname_Client" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_Products">
+            <EntityTypeMapping TypeName="salamModel.Order_Products">
+              <MappingFragment StoreEntitySet="Order_Products">
+                <ScalarProperty Name="Order_Product_ID" ColumnName="Order_Product_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="salamModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+                <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+                <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="salamModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Post_ID" ColumnName="Post_ID" />
+                <ScalarProperty Name="PostName" ColumnName="PostName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="salamModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Storage_ID" ColumnName="Storage_ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Providers">
+            <EntityTypeMapping TypeName="salamModel.Providers">
+              <MappingFragment StoreEntitySet="Providers">
+                <ScalarProperty Name="Provider_ID" ColumnName="Provider_ID" />
+                <ScalarProperty Name="Product_ID" ColumnName="Product_ID" />
+                <ScalarProperty Name="Storage_ID" ColumnName="Storage_ID" />
+                <ScalarProperty Name="DateOfProvide" ColumnName="DateOfProvide" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staffs">
+            <EntityTypeMapping TypeName="salamModel.Staffs">
+              <MappingFragment StoreEntitySet="Staffs">
+                <ScalarProperty Name="Staff_ID" ColumnName="Staff_ID" />
+                <ScalarProperty Name="Post_ID" ColumnName="Post_ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Surname_Staff" ColumnName="Surname_Staff" />
+                <ScalarProperty Name="Name_Staff" ColumnName="Name_Staff" />
+                <ScalarProperty Name="Lastname_Staff" ColumnName="Lastname_Staff" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storage">
+            <EntityTypeMapping TypeName="salamModel.Storage">
+              <MappingFragment StoreEntitySet="Storage">
+                <ScalarProperty Name="Storage_ID" ColumnName="Storage_ID" />
+                <ScalarProperty Name="Storage_Name" ColumnName="Storage_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="salamModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="salamModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Salt" ColumnName="Salt" />
+                <ScalarProperty Name="Users_Id" ColumnName="Users_Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImageTable">
+            <EntityTypeMapping TypeName="salamModel.ImageTable">
+              <MappingFragment StoreEntitySet="ImageTable">
+                <ScalarProperty Name="ImageData" ColumnName="ImageData" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

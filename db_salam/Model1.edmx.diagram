@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5a3cb9c4e83646fb9fdd648e6ea56dbe" Name="Diagram1" ZoomLevel="132">
+        <EntityTypeShape EntityType="salamModel.Clients" Width="1.5" PointX="0.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Order_Products" Width="1.5" PointX="5.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Orders" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Post" Width="1.5" PointX="1.5" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Products" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Providers" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Staffs" Width="1.5" PointX="0.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Storage" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="salamModel.Users" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
+        <AssociationConnector Association="salamModel.FK_Orders_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Order_Products_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Order_Products_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Orders_Staffs" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Staffs_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Products_Storage" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Providers_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="salamModel.FK_Providers_Storage" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="salamModel.ImageTable" Width="1.5" PointX="7.75" PointY="4.25" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,19 @@
+﻿<Window x:Class="db_salam.AddImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:db_salam"
+        mc:Ignorable="d"
+       Title="Добавить изображение" Height="400" Width="600" Background="LightPink">
+    <Grid>
+        <Image x:Name="image" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="192,50,0,0"/>
+        <TextBox x:Name="FilePathTextBox" Width="300" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,260,0,0"/>
+
+        <!-- Кнопка для выбора изображения -->
+        <Button Click="SelectImage" Content="Выбрать изображение" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,300,0,0" Width="204"/>
+
+        <!-- Кнопка для загрузки изображения в БД -->
+        <Button Click="UploadImage" Content="Загрузить в БД" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,340,0,0" Width="204"/>
+    </Grid>
+</Window>
